@@ -49,22 +49,20 @@ Spreadsheet.open('landing_pages.xls') do |book|
         excel_row[3] = row[3]
         excel_row[4] = row[4]
         excel_row[5] = "No data"
-        excle_row[6] = "No data"
+        excel_row[6] = "No data"
       else
 
+        next if hash["response"]["data"]["Offer"]["status"] == 'deleted'
         payout = hash["response"]["data"]["Offer"]["default_payout"]
         currency = hash["response"]["data"]["Offer"]["currency"]
-
-        if payout.to_f != row[3].to_f && currency != row[4]
-          excel_row = @sheet1.row(row_counter)
-          excel_row[0] = row[0]
-          excel_row[1] = row[1]
-          excel_row[2] = row[2]
-          excel_row[3] = row[3]
-          excel_row[4] = row[4]
-          excel_row[5] = hash["response"]["data"]["Offer"]["default_payout"]
-          excel_row[6] = hash["response"]["data"]["Offer"]["currency"]
-        end
+        excel_row = @sheet1.row(row_counter)
+        excel_row[0] = row[0]
+        excel_row[1] = row[1]
+        excel_row[2] = row[2]
+        excel_row[3] = row[3]
+        excel_row[4] = row[4]
+        excel_row[5] = payout
+        excel_row[6] = currency
 
       end
       row_counter += 1
